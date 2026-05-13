@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Core Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isSuperAdmin() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
+    }
+
+    function isClassAdmin() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'class_admin';
+    }
+
+    function isApproved() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.approvalStatus == 'approved';
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      // Anyone logged in can read a user profile
+      allow read: if isAuthenticated();
+      // Users can only create their own document during onboarding
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      // Users can update their own data, Class/Super Admins can update approvals
+      allow update: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin() || isClassAdmin());
+      allow delete: if isSuperAdmin();
+
+      // Nested notifications subcollection
+      match /notifications/{notificationId} {
+        allow read, update: if isAuthenticated() && request.auth.uid == userId;
+        allow create: if isAuthenticated(); // Others can trigger notifications
+      }
+    }
+
+    // Documents (Library) Collection
+    match /documents/{docId} {
+      allow read: if isAuthenticated();
+      allow create: if isApproved();
+      allow update, delete: if isAuthenticated() && (request.resource.data.uploaderId == request.auth.uid || isSuperAdmin());
+    }
+
+    // Posts (Feed) Collection
+    match /posts/{postId} {
+      allow read: if isAuthenticated();
+      allow create: if isApproved();
+      allow update, delete: if isAuthenticated() && (resource.data.authorId == request.auth.uid || isSuperAdmin());
+    }
+  }
+}
