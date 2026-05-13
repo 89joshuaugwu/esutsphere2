@@ -29,6 +29,10 @@ export const metadata: Metadata = {
   },
   description: "Connect, share notes, and excel. The exclusive academic social network for ESUT students.",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "ESUTSphere",
     description: "Connect, share notes, and excel. The exclusive academic social network for ESUT students.",
