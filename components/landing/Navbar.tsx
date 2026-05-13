@@ -24,9 +24,9 @@ export default function Navbar() {
       <div className="fixed top-4 inset-x-4 z-50 flex justify-center pointer-events-none">
         <nav className="pointer-events-auto w-full max-w-[1100px] bg-[#16162a]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-full px-4 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 pl-2">
-            <Image src="/logo.png" alt="ESUTSphere Logo" width={28} height={28} className="rounded-full" />
-            <span className="font-display text-xl text-white tracking-wide">
+          <Link href="/" className="flex items-center gap-2 pl-2 group">
+            <Image src="/logo.png" alt="ESUTSphere Logo" width={28} height={28} className="rounded-full group-hover:scale-105 transition-transform" />
+            <span className="font-display text-xl font-bold bg-gradient-to-r from-white via-white to-cyan bg-clip-text text-transparent tracking-wide">
               ESUTSphere
             </span>
           </Link>

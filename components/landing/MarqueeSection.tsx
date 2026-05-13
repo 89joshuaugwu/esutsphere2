@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "motion/react";
+
 const DEPARTMENTS = [
   "💻 Computer Science",
   "⚡ Electrical Engineering",
@@ -23,7 +25,11 @@ export default function MarqueeSection() {
       <div className="absolute top-0 bottom-0 right-0 w-[120px] bg-gradient-to-l from-[#080810] to-transparent z-10 pointer-events-none" />
 
       {/* Marquee Track */}
-      <div className="flex items-center gap-8 w-max animate-[marquee-scroll_30s_linear_infinite]">
+      <motion.div 
+        className="flex items-center gap-8 w-max pr-8"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+      >
         {/* Duplicate list to create seamless infinite loop */}
         {[...DEPARTMENTS, ...DEPARTMENTS].map((dept, i) => (
           <div
@@ -33,7 +39,7 @@ export default function MarqueeSection() {
             {dept}
           </div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

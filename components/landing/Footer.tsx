@@ -7,9 +7,9 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
         {/* Brand Column (takes 2 columns space on lg) */}
         <div className="lg:col-span-2">
-          <Link href="/" className="flex items-center gap-2 mb-6">
-            <Image src="/logo.png" alt="ESUTSphere Logo" width={28} height={28} className="rounded-full" />
-            <span className="font-display text-xl text-white tracking-wide">
+          <Link href="/" className="flex items-center gap-2 mb-6 group w-fit">
+            <Image src="/logo.png" alt="ESUTSphere Logo" width={28} height={28} className="rounded-full group-hover:scale-105 transition-transform" />
+            <span className="font-display text-xl font-bold bg-gradient-to-r from-white via-white to-cyan bg-clip-text text-transparent tracking-wide">
               ESUTSphere
             </span>
           </Link>
